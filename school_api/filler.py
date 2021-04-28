@@ -25,7 +25,9 @@ def generate_person_type():
 def generate_fake_people(num, person_type_pk):
     '''
     this function generates a fake address, a fake person, and selects the type of person to create. It takes in the number of people you want to create, and the type of person you want them to be.
-    '''
+    ''' 
+    generate_person_type()
+
     student = PersonType.objects.get(pk=1)
     teacher = PersonType.objects.get(pk=2)
     teaching_assistant = PersonType.objects.get(pk=3)
