@@ -20,6 +20,7 @@ class School(models.Model):
     def __str__(self):
         return self.name
 
+
 class Building(models.Model):
     building_id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=50)
@@ -29,6 +30,7 @@ class Building(models.Model):
     def __str__(self):
         return self.name
 
+
 class Room(models.Model):
     room_id = models.AutoField(primary_key=True)
     room_number = models.CharField(max_length=3)
@@ -37,6 +39,7 @@ class Room(models.Model):
     def __str__(self):
         return f'{self.building_id}, {self.room_number}'
 
+
 class PersonType(models.Model):
     person_type_id = models.AutoField(primary_key=True)
     person_type = models.CharField(max_length=30)
@@ -44,8 +47,9 @@ class PersonType(models.Model):
     def __str__(self):
         return self.person_type
 
+
 class Person(models.Model):
-    student_id = models.AutoField(primary_key=True)
+    person_id = models.AutoField(primary_key=True)
     first_name = models.CharField(max_length=150)
     last_name = models.CharField(max_length=150)
     email = models.EmailField(max_length=150)
@@ -75,6 +79,7 @@ class Course(models.Model):
     def __str__(self):
         return self.name
 
+
 class Semester(models.Model):
     semester_id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=6)
@@ -82,12 +87,14 @@ class Semester(models.Model):
     def __str__(self):
         return self.name
 
+
 class DayOfWeek(models.Model):
     day_id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=10)
 
     def __str__(self):
         return self.name
+
 
 class TimeSlot(models.Model):
     TIME_CHOICES = (
