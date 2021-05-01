@@ -8,11 +8,13 @@ This is going to be a back end api of students, teachers, and classes. There wil
 
 This is a portfolio project, but I want it to seem like this API is real. So I want to fill this API with data from a school that I have created myself. I have mapped out buidlings, rooms, created semesters and courses. There is a filler.py file that is strictly for filling the database with information so the front end has more data to work with.
 
-to generate the campus, staff, and students:
+to generate the campus, staff, students, and classes:
 
 `python manage.py shell`
 
 `from school_api.filler import generate_university`
+
+then type `generate_university()`
 
 ## Visuals
 
