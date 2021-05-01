@@ -30,6 +30,7 @@ INSTALLED_APPS = [
 
     #3rd party
     'rest_framework',
+    'django_filters',
 ]
 
 MIDDLEWARE = [
@@ -106,3 +107,8 @@ STATIC_URL = '/static/'
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# rest_framework filtering
+REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
+}
