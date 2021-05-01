@@ -10,12 +10,17 @@ from .serializers import AddressSerializer, SchoolSerializer, BuildingSerializer
 @api_view(['GET'])
 def main_view(request):
     api_urls = {
-        'Key':'Value'
+        'api paths': {
+            'api/v1/people':'list of people and their roles',
+            'api/v1/campus':'list of campus, buidlings, and rooms',
+            'api/v1/class':'list of classes the university offers'
+        }
     }
     return Response(api_urls)
 
 @api_view(['GET'])
 def people_list(request):
+    print(request.query_params)
     people = PersonType.objects.all()
     serializer = PersonTypeSerializer(people, many=True)
     return Response(serializer.data)
@@ -24,4 +29,10 @@ def people_list(request):
 def campus_list(request):
     campus = School.objects.all()
     serializer = SchoolSerializer(campus, many=True)
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def class_list(request):
+    class_list = Course.objects.all()
+    serializer = CourseSerializer(class_list, many=True)
     return Response(serializer.data)

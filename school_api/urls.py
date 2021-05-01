@@ -5,7 +5,8 @@ from . import views
 from rest_framework import routers, serializers, viewsets
 
 urlpatterns = [
-    path('', views.main_view, name='home'),
-    path('people/', views.people_list, name='people'),
-    path('campus/', views.campus_list, name='campus'),
+    path('api/v1/', views.main_view, name='home'),
+    path('api/v1/people/', views.people_list, name='people'),
+    path('api/v1/campus/', views.campus_list, name='campus'),
+    path('api/v1/class/', views.class_list, name='class'),
 ]

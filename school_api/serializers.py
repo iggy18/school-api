@@ -51,35 +51,38 @@ class PersonTypeSerializer(serializers.ModelSerializer):
 class SubjectSerializer(serializers.ModelSerializer):
     class Meta:
         model = Subject
-        fiels = '__all__'
+        fields = '__all__'
 
 
 class CourseSerializer(serializers.ModelSerializer):
+    subject_id = serializers.StringRelatedField(many=False)
+    teacher_id = serializers.StringRelatedField(many=False)
+    room_id = serializers.StringRelatedField(many=False)
     class Meta:
         model = Course
-        fiels = '__all__'
+        fields = 'course_id', 'name', 'subject_id', 'teacher_id', 'room_id'
 
 
 class SemesterSerializer(serializers.ModelSerializer):
     class Meta:
         model = Semester
-        fiels = '__all__'
+        fields = '__all__'
 
 
 class DayOfWeekSerializer(serializers.ModelSerializer):
     class Meta:
         model = DayOfWeek
-        fiels = '__all__'
+        fields = '__all__'
 
 
 class TimeSlotSerializer(serializers.ModelSerializer):
     class Meta:
         model = TimeSlot
-        fiels = '__all__'
+        fields = '__all__'
 
 
 class StudentEnrollmentSerializer(serializers.ModelSerializer):
     class Meta:
         model = StudentEnrollment
-        fiels = '__all__'
+        fields = '__all__'
 
