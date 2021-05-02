@@ -2,6 +2,7 @@ from django.http import JsonResponse
 from django.shortcuts import render
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from rest_framework import generics
 
 from .models import Address, Building, Course, DayOfWeek, Person, PersonType, Room, School, Semester, StudentEnrollment, Subject, TimeSlot
 from .serializers import AddressSerializer, SchoolSerializer, BuildingSerializer, RoomSerializer, PersonTypeSerializer, PersonSerializer, SubjectSerializer, CourseSerializer, SemesterSerializer, DayOfWeekSerializer, TimeSlotSerializer, StudentEnrollmentSerializer 
@@ -18,12 +19,12 @@ def main_view(request):
     }
     return Response(api_urls)
 
-@api_view(['GET'])
-def people_list(request):
-    print(request.query_params)
-    people = PersonType.objects.all()
-    serializer = PersonTypeSerializer(people, many=True)
-    return Response(serializer.data)
+
+class PeopleList(generics.ListAPIView):
+    queryset = PersonType.objects.all()
+    serializer_class = PersonTypeSerializer
+
+
 
 @api_view(['GET'])
 def campus_list(request):
