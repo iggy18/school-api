@@ -26,14 +26,11 @@ class PeopleList(generics.ListAPIView):
 
 
 
-@api_view(['GET'])
-def campus_list(request):
-    campus = School.objects.all()
-    serializer = SchoolSerializer(campus, many=True)
-    return Response(serializer.data)
+class CampusList(generics.ListAPIView):
+    queryset = School.objects.all()
+    serializer_class = SchoolSerializer
 
-@api_view(['GET'])
-def class_list(request):
-    class_list = Course.objects.all()
-    serializer = CourseSerializer(class_list, many=True)
-    return Response(serializer.data)
+
+class CourseList(generics.ListAPIView):
+    queryset = Course.objects.all()
+    serializer_class = CourseSerializer
