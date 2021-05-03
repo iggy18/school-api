@@ -13,8 +13,8 @@ class RoomSerializer(serializers.ModelSerializer):
         model = Room
         fields = 'room_id', 'room_number'
 
-class BuildingSerializer(serializers.ModelSerializer):
 
+class BuildingSerializer(serializers.ModelSerializer):
     address_id = serializers.StringRelatedField(many=False)
     rooms = RoomSerializer(source='room_set', many=True, read_only=True)
 
@@ -37,7 +37,7 @@ class PersonSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Person
-        fields = 'person_id', 'first_name', 'last_name', 'email', 'address_id'
+        fields = 'person_id', 'person_type_id', 'first_name', 'last_name', 'email', 'address_id'
 
 
 class PersonTypeSerializer(serializers.ModelSerializer):

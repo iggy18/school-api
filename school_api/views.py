@@ -1,11 +1,12 @@
 from django.http import JsonResponse
 from django.shortcuts import render
+from rest_framework import filters, generics
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from rest_framework import generics
 
-from .models import Address, Building, Course, DayOfWeek, Person, PersonType, Room, School, Semester, StudentEnrollment, Subject, TimeSlot
-from .serializers import AddressSerializer, SchoolSerializer, BuildingSerializer, RoomSerializer, PersonTypeSerializer, PersonSerializer, SubjectSerializer, CourseSerializer, SemesterSerializer, DayOfWeekSerializer, TimeSlotSerializer, StudentEnrollmentSerializer 
+from .models import (Address, Building, Course, DayOfWeek, Person, PersonType, Room, School, Semester, StudentEnrollment, Subject, TimeSlot)
+
+from .serializers import (AddressSerializer, BuildingSerializer, CourseSerializer, DayOfWeekSerializer, PersonSerializer, PersonTypeSerializer, RoomSerializer, SchoolSerializer, SemesterSerializer, StudentEnrollmentSerializer, SubjectSerializer, TimeSlotSerializer)
 
 
 @api_view(['GET'])
@@ -21,19 +22,28 @@ def main_view(request):
 
 
 class PeopleList(generics.ListAPIView):
-    queryset = PersonType.objects.all()
-    serializer_class = PersonTypeSerializer
+    queryset = Person.objects.all()
+    serializer_class = PersonSerializer
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['^first_name', '^last_name', 'person__person_type']
 
 
+class PersonDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Person.objects.all()
+    serializer_class = PersonSerializer
 
-@api_view(['GET'])
-def campus_list(request):
-    campus = School.objects.all()
-    serializer = SchoolSerializer(campus, many=True)
-    return Response(serializer.data)
+class PersonSearch(generics.ListAPIView):
+    queryset = Person.objects.all()
+    serializer_class = PersonSerializer
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['first_name']
 
-@api_view(['GET'])
-def class_list(request):
-    class_list = Course.objects.all()
-    serializer = CourseSerializer(class_list, many=True)
-    return Response(serializer.data)
+class CampusList(generics.ListAPIView):
+    queryset = School.objects.all()
+    serializer_class = SchoolSerializer
+
+
+class CourseList(generics.ListAPIView):
+    queryset = Course.objects.all()
+    serializer_class = CourseSerializer
+
