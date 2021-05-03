@@ -1,11 +1,12 @@
 from django.http import JsonResponse
 from django.shortcuts import render
+from rest_framework import filters, generics
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from rest_framework import generics
 
-from .models import Address, Building, Course, DayOfWeek, Person, PersonType, Room, School, Semester, StudentEnrollment, Subject, TimeSlot
-from .serializers import AddressSerializer, SchoolSerializer, BuildingSerializer, RoomSerializer, PersonTypeSerializer, PersonSerializer, SubjectSerializer, CourseSerializer, SemesterSerializer, DayOfWeekSerializer, TimeSlotSerializer, StudentEnrollmentSerializer 
+from .models import (Address, Building, Course, DayOfWeek, Person, PersonType, Room, School, Semester, StudentEnrollment, Subject, TimeSlot)
+
+from .serializers import (AddressSerializer, BuildingSerializer, CourseSerializer, DayOfWeekSerializer, PersonSerializer, PersonTypeSerializer, RoomSerializer, SchoolSerializer, SemesterSerializer, StudentEnrollmentSerializer, SubjectSerializer, TimeSlotSerializer)
 
 
 @api_view(['GET'])
@@ -21,10 +22,21 @@ def main_view(request):
 
 
 class PeopleList(generics.ListAPIView):
-    queryset = PersonType.objects.all()
-    serializer_class = PersonTypeSerializer
+    queryset = Person.objects.all()
+    serializer_class = PersonSerializer
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['^first_name', '^last_name', 'person__person_type']
 
 
+class PersonDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Person.objects.all()
+    serializer_class = PersonSerializer
+
+class PersonSearch(generics.ListAPIView):
+    queryset = Person.objects.all()
+    serializer_class = PersonSerializer
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['first_name']
 
 class CampusList(generics.ListAPIView):
     queryset = School.objects.all()
@@ -34,3 +46,4 @@ class CampusList(generics.ListAPIView):
 class CourseList(generics.ListAPIView):
     queryset = Course.objects.all()
     serializer_class = CourseSerializer
+
