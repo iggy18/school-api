@@ -28,7 +28,7 @@ I want to keep the data in this API tidy so I read up on relational database pla
 - api/v1/campus/ returns a list of campus navigation
 - api/v1/class/ returns a list of classes at the university
 
-![postman documentation so far.](https://documenter.getpostman.com/view/13083017/TzRNEVCo#72231f70-c112-48d4-b17e-4d6dbafe2a0b)
+[postman documentation so far.](https://documenter.getpostman.com/view/13083017/TzRNEVCo#72231f70-c112-48d4-b17e-4d6dbafe2a0b)
 
 ## Project status
 
