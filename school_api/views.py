@@ -25,25 +25,48 @@ class PeopleList(generics.ListAPIView):
     queryset = Person.objects.all()
     serializer_class = PersonSerializer
     filter_backends = [filters.SearchFilter]
-    search_fields = ['^first_name', '^last_name', 'person__person_type']
+    search_fields = ['^first_name', '^last_name', '=person_id', 'person_type_id__person_type',]
+
 
 
 class PersonDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Person.objects.all()
     serializer_class = PersonSerializer
 
-class PersonSearch(generics.ListAPIView):
-    queryset = Person.objects.all()
-    serializer_class = PersonSerializer
-    filter_backends = [filters.SearchFilter]
-    search_fields = ['first_name']
+
 
 class CampusList(generics.ListAPIView):
-    queryset = School.objects.all()
-    serializer_class = SchoolSerializer
+    serializer_class = BuildingSerializer
+
+    def get_queryset(self):
+        queryset = Building.objects.all()
+        building = self.request.query_params.get('building')
+        
+        if building is not None:
+            queryset = queryset.filter(name__istartswith=building)
+        
+        return queryset
+
 
 
 class CourseList(generics.ListAPIView):
-    queryset = Course.objects.all()
     serializer_class = CourseSerializer
 
+    def get_queryset(self):
+        queryset = Course.objects.all()
+        subject = self.request.query_params.get('subject')
+        teacherfirst = self.request.query_params.get('teacherfirst')
+        teacherlast = self.request.query_params.get('teacherlast')
+
+        if subject is not None:
+            queryset = queryset.filter(subject_id__name=subject)
+        
+        if teacherfirst is not None:
+            queryset = queryset.filter(teacher_id__first_name__iexact=teacherfirst)
+        
+        if teacherlast is not None:
+            queryset = queryset.filter(teacher_id__last_name__iexact=teacherlast)
+        
+        return queryset
+        
+    

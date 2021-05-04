@@ -25,7 +25,7 @@ class BuildingSerializer(serializers.ModelSerializer):
 
 class SchoolSerializer(serializers.ModelSerializer):
     address_id = serializers.StringRelatedField(many=False)
-    buildings = BuildingSerializer(source='building_set', many=True, read_only=True)
+    # buildings = BuildingSerializer(source='building_set', many=True, read_only=True)
 
     class Meta:
         model = School
@@ -34,6 +34,7 @@ class SchoolSerializer(serializers.ModelSerializer):
 
 class PersonSerializer(serializers.ModelSerializer):
     address_id = serializers.StringRelatedField(many=False)
+    person_type_id = serializers.StringRelatedField(many=False)
 
     class Meta:
         model = Person
