@@ -25,14 +25,23 @@ class PeopleList(generics.ListAPIView):
     queryset = Person.objects.all()
     serializer_class = PersonSerializer
     filter_backends = [filters.SearchFilter]
-    search_fields = ['^first_name', '^last_name', '=person_id', 'person_type_id__person_type',]
+    search_fields = ['^first_name', '^last_name', '=person_id']
 
+    # need to add this peram to postman and test
+    def get_queryset(self):
+        queryset = Person.objects.all()
+        person_type = self.request.query_params.get('persontype')
 
+        if person_type is not None:
+            queryset = queryset.filter(person_type=person_type)
 
-class PersonDetail(generics.RetrieveUpdateDestroyAPIView):
+        return queryset
+
+class CrudPeople(generics.RetrieveUpdateDestroyAPIView):
     queryset = Person.objects.all()
     serializer_class = PersonSerializer
-
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['^first_name', '^last_name', '=person_id']
 
 
 class CampusList(generics.ListAPIView):

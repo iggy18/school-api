@@ -11,6 +11,8 @@ djangorestframework = "^3.12.4"
 django-environ = "^0.4.5"
 Faker = "^8.1.1"
 django-filter = "^2.4.0"
+djoser = "^2.1.0"
+djangorestframework-simplejwt = "^4.6.0"
 
 [tool.poetry.dev-dependencies]
 
