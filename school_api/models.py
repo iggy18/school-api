@@ -3,10 +3,10 @@ from django.contrib.auth.models import User
 
 class Address(models.Model):
     address_id = models.AutoField(primary_key=True)
-    street_address = models.CharField(max_length=90)
-    city = models.CharField(max_length=20)
-    state = models.CharField(max_length=2)
-    zipcode = models.CharField(max_length=5)
+    street_address = models.CharField(max_length=255)
+    city = models.CharField(max_length=255)
+    state = models.CharField(max_length=255)
+    zipcode = models.CharField(max_length=255)
 
     def __str__(self):
         return f'{self.street_address}, {self.city}, {self.state} {self.zipcode}'
@@ -14,7 +14,7 @@ class Address(models.Model):
 
 class School(models.Model):
     school_id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=255)
     address_id = models.ForeignKey(Address, on_delete=models.CASCADE)
 
     def __str__(self):
@@ -23,7 +23,7 @@ class School(models.Model):
 
 class Building(models.Model):
     building_id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=255)
     school_id = models.ForeignKey(School, on_delete=models.CASCADE)
     address_id = models.ForeignKey(Address, on_delete=models.CASCADE)
 
@@ -33,7 +33,7 @@ class Building(models.Model):
 
 class Room(models.Model):
     room_id = models.AutoField(primary_key=True)
-    room_number = models.CharField(max_length=3)
+    room_number = models.CharField(max_length=255)
     building_id = models.ForeignKey(Building, on_delete=models.CASCADE)
 
     def __str__(self):
@@ -42,7 +42,7 @@ class Room(models.Model):
 
 class PersonType(models.Model):
     person_type_id = models.AutoField(primary_key=True)
-    person_type = models.CharField(max_length=30)
+    person_type = models.CharField(max_length=255)
 
     def __str__(self):
         return self.person_type
@@ -50,9 +50,9 @@ class PersonType(models.Model):
 
 class Person(models.Model):
     person_id = models.AutoField(primary_key=True)
-    first_name = models.CharField(max_length=150)
-    last_name = models.CharField(max_length=150)
-    email = models.EmailField(max_length=150)
+    first_name = models.CharField(max_length=255)
+    last_name = models.CharField(max_length=255)
+    email = models.EmailField(max_length=255)
     address_id = models.ForeignKey(Address, on_delete=models.CASCADE)
     person_type_id = models.ForeignKey(PersonType, on_delete=models.CASCADE)
 
@@ -62,7 +62,7 @@ class Person(models.Model):
 
 class Subject(models.Model):
     subject_id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=150)
+    name = models.CharField(max_length=255)
 
     def __str__(self):
         return self.name
@@ -71,7 +71,7 @@ class Subject(models.Model):
 class Course(models.Model):
     course_id = models.AutoField(primary_key=True)
     subject_id = models.ForeignKey(Subject, on_delete=models.CASCADE)
-    name = models.CharField(max_length=150) 
+    name = models.CharField(max_length=255) 
     teacher_id = models.ForeignKey(Person, on_delete=models.CASCADE)
     room_id = models.ForeignKey(Room, on_delete=models.CASCADE)
 
@@ -82,7 +82,7 @@ class Course(models.Model):
 
 class Semester(models.Model):
     semester_id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=6)
+    name = models.CharField(max_length=255)
 
     def __str__(self):
         return self.name
@@ -90,7 +90,7 @@ class Semester(models.Model):
 
 class DayOfWeek(models.Model):
     day_id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=10)
+    name = models.CharField(max_length=255)
 
     def __str__(self):
         return self.name
@@ -109,7 +109,7 @@ class TimeSlot(models.Model):
         ('16:00:00', '3 pm'),
     )
     slot_id = models.AutoField(primary_key=True)
-    start_time = models.CharField(max_length=8, choices=TIME_CHOICES)
+    start_time = models.CharField(max_length=255, choices=TIME_CHOICES)
     course_id = models.ForeignKey(Course, on_delete=models.CASCADE)
     semester_id = models.ForeignKey(Semester, on_delete=models.CASCADE)
     day_id = models.ForeignKey(DayOfWeek, on_delete=models.CASCADE)
